@@ -10,6 +10,9 @@
 #### Полезные ссылки
 [Пригласить бота к себе](https://discord.com/api/oauth2/authorize?client_id=802987390033330227&permissions=8&scope=bot)
 [BotiCord](https://boticord.top/bot/802987390033330227)
+
+
+##### Сервер тех.поддержки
 <a href="https://discord.gg/etc66NNCVP">
   <img src="http://invidget.switchblade.xyz/etc66NNCVP" />
 </a>
