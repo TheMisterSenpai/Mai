@@ -2,11 +2,9 @@ import os
 
 #bot_setting
 BOT_PREFIX = 'm'
-#BOT_PREFIX = '!' # для тестов
 
 #API
 TOKEN = os.environ['TOKEN']
-#TOKEN = 'TDE5NjExNDAzMjgzNDY0MjIy.YEpImg.5kuCUxCf9f5rmdHRYQl0TGtlNJc' #токен Mai Canary
 MONGO = os.environ['MONGO']
 YOUTUBE_API = os.environ['YTAPI']
 

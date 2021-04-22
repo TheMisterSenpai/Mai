@@ -148,7 +148,7 @@ class Owner(commands.Cog):
     async def bl(self, ctx, member: discord.Member=None, *, reason=None):
         if not member:
             member = ctx.author
-            await ctx.send('Укажи человека человека и причину, чтобы добавить его в ЧС')
+            await ctx.send('Укажи человека и причину, чтобы добавить его в ЧС')
 
             return
 
@@ -166,7 +166,7 @@ class Owner(commands.Cog):
 
         if not member:
             member = ctx.author
-            await ctx.send('Укажи человека человека и причину, чтобы добавить его в ЧС')
+            await ctx.send('Укажи человека и причину, чтобы убрать его в ЧС')
 
             return
 

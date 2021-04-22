@@ -10,11 +10,9 @@ import os
 import sys
 import aiohttp
 import traceback
-import aiohttp
 
 import config
 from asyncio import sleep
-import jishaku
 
 
 client = commands.Bot( command_prefix = config.BOT_PREFIX, intents = discord.Intents.all())

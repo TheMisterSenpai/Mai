@@ -79,57 +79,27 @@ class администрация(commands.Cog):
 			return
 
 		elif ctx.author.top_role < member.top_role:
-			await ctx.send('❌⟩ **Нельзя** блокировать пользователя выше тебя(сделанно для безопастности)', delete_after = 15)
+			await ctx.send('❌⟩ **Нельзя** блокировать пользователя выше тебя(сделанно для безопасности)', delete_after = 15)
 
 			return
 
 		if reason == None:
 
-			try:
-
-				emb = discord.Embed( color = discord.Color.red())
-				emb.add_field( name = '🔨⟩ Заблокирован', value = f'Вы, **{member.name}** были заблокированы с сервера **{ctx.guild.name}**', inline = False)
-				emb.add_field( name = 'Модератор', value = f'{ctx.author}')
-
-				await ctx.send(embed = emb, delete_after = 5)
-
-				await member.ban(reason=None)
-
-			except:
-				success = False
-			else:
-				success = True
-
 			emb = discord.Embed( color = discord.Color.red())
-			emb.add_field( name = '🔨⟩ Заблокирован', value = f'**{member.name}** был заблокированы с сервера **{ctx.guild.name}**', inline = False)
+			emb.add_field( name = '🔨⟩ Заблокирован', value = f'**{member.name}** был заблокирован с сервера **{ctx.guild.name}**', inline = False)
 			emb.add_field( name = 'Модератор', value = f'{ctx.author}')
 
 			await ctx.send(embed=emb, delete_after = 15)
 
 			return
 
-		try:
-
-			emb = discord.Embed( color = discord.Color.red())
-			emb.add_field( name = '🔨⟩ Заблокирован', value = f'Вы, **{member.name}** были заблокированы с сервера **{ctx.guild.name}**', inline = False)
-			emb.add_field( name = 'По причине:', value = reason, inline = False)
-			emb.add_field( name = 'Модератор:', value = f'{ctx.author}')
-
-			await ctx.send(embed = emb, delete_after = 5)
-
-			await member.ban(reason=None)
-
-		except:
-			success = False
 		else:
-			success = True
+			emb = discord.Embed( color = discord.Color.red())
+			emb.add_field( name = '🔨⟩ Заблокирован', value = f'**{member.name}** был заблокирован с сервера **{ctx.guild.name}**', inline = False)
+			emb.add_field( name = 'По причине:', value = reason, inline = False)
+			emb.add_field( name = 'Модератор:', value = f'``{ctx.author}``')
 
-		emb = discord.Embed( color = discord.Color.red())
-		emb.add_field( name = '🔨⟩ Заблокирован', value = f'**{member.name}** был заблокированы с сервера **{ctx.guild.name}**', inline = False)
-		emb.add_field( name = 'По причине:', value = reason, inline = False)
-		emb.add_field( name = 'Модератор:', value = f'``{ctx.author}``')
-
-		await ctx.send(embed = emb, delete_after = 15)
+			await ctx.send(embed = emb, delete_after = 15)
 
 	@commands.command(name = 'kick')
 	@commands.has_permissions( kick_members = True )
@@ -158,26 +128,12 @@ class администрация(commands.Cog):
 			return
 
 		elif ctx.author.top_role < member.top_role:
-			await ctx.send('❌⟩ **Нельзя** блокировать пользователя выше тебя(сделанно для безопастности)', delete_after = 15)
+			await ctx.send('❌⟩ **Нельзя** блокировать пользователя выше тебя(сделанно для безопасности)', delete_after = 15)
 
 			return
 
 		if reason == None:
-			try:
-
-				emb = discord.Embed( colour = discord.Color.red(), timestamp = ctx.message.created_at)
-				emb.add_field(name = '🔨⟩Выгнат', value = f'Вы, `{member.name}` были выгнаты с сервера {ctx.guild.name}', inline = False)
-				emb.add_field(name = 'Модератор:', value = f'**{ctx.author}**')
-
-				await member.send(embed = emb)
-
-				await member.kick(reason=reason)
-
-			except:
-				success = False
-			else:
-				success = True
-
+			
 			emb = discord.Embed( colour = discord.Color.red(), timestamp = ctx.message.created_at)
 			emb.add_field(name = '🔨⟩Выгнат', value = f'`{member.name}` был выгнат с сервера {ctx.guild.name}', inline = False)
 			emb.add_field(name = 'Модератор:', value = f'**{ctx.author}**')
@@ -186,27 +142,14 @@ class администрация(commands.Cog):
 
 			return
 
-		try:
+		else:
+
 			emb = discord.Embed( colour = discord.Color.red(), timestamp = ctx.message.created_at)
-			emb.add_field(name = '🔨⟩Выгнат', value = f'Вы, `{member.name}` были выгнаты с сервера {ctx.guild.name}', inline = False)
+			emb.add_field(name = '🔨⟩Выгнат', value = f'`{member.name}` был выгнат с сервер {ctx.guild.name}', inline = False)
 			emb.add_field(name = 'Причина:', value = reason, inline = False)
 			emb.add_field(name = 'Модератор:', value = f'**{ctx.author}**')
 
-			await member.send(embed = emb)
-
-			await member.kick(reason=reason)
-
-		except:
-			success = False
-		else:
-			success = True
-
-		emb = discord.Embed( colour = discord.Color.red(), timestamp = ctx.message.created_at)
-		emb.add_field(name = '🔨⟩Выгнат', value = f'`{member.name}` был выгнат с сервер {ctx.guild.name}', inline = False)
-		emb.add_field(name = 'Причина:', value = reason, inline = False)
-		emb.add_field(name = 'Модератор:', value = f'**{ctx.author}**')
-
-		await ctx.send(embed = emb)
+			await ctx.send(embed = emb)
 
 
 	@commands.command(name = 'banlist')

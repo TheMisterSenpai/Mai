@@ -128,7 +128,7 @@ class информация(commands.Cog):
         '''узнать о человеке на сервере
 
         Пример:
-        muserinfo @TheMisterSenpai#6701
+        muserinfo @TheMisterSenpai#6701 или id пользователя
         '''
         user = ctx.message.author if (member == None) else member
 
@@ -171,12 +171,12 @@ class информация(commands.Cog):
             emb.set_thumbnail(url=user.avatar_url)
             emb.add_field(name = '**Имя**', value = user.name)
             emb.add_field(name='**Зарегистрирован**', value=user.created_at.strftime("%d.%m.%Y"))   
-            if not pr.find_one({"_id": user.id})["bio"]:
+            if not pr.find_one({"_id": user.id}):
                 emb.add_field(name = '**О вас**', value = '```Не указанно```')
             else:
                 bio = pr.find_one({"_id": user.id})["bio"]
                 emb.add_field(name = '**О вас**', value = f'```{bio}```')    
-            emb.set_footer(text='Для настройки профиля, пропишите msetbio <ВашНик><Биография>', icon_url=ctx.author.avatar_url)
+            emb.set_footer(text='Для настройки профиля, пропишите msetbio <Биография>', icon_url=ctx.author.avatar_url)
 
             await ctx.send(embed=emb)
 
@@ -191,16 +191,21 @@ class информация(commands.Cog):
 
 #Для настройки mprofile 
     @commands.command(name = 'setbio', hidden = True)
-    async def setbio(self, ctx, member: discord.Member=None, *, reason=None):
-        user = ctx.message.author if (member == None) else member
+    async def setbio(self, ctx, *, reason=None): # member: discord.Member=None,
+        
+        if reason == None:
+            await ctx.send('Пожалуйста укажите вашу биографию')
 
-        if not pr.find_one({"_id": user.id}):
-            await ctx.send(f'> Установлена ваша биография **{reason}**')
-            pr.insert_one({"_id": user.id, "bio": reason})
+            return
+
         else:
-            await ctx.send(f'> Ваша биография была изменнено на **{reason}**')
-            pr.delete_one({"_id": user.id})
-            pr.insert_one({"_id": user.id, "bio": reason})         
+            if not pr.find_one({"_id": ctx.author.id}):
+                await ctx.send(f'> Установлена ваша биография **{reason}**')
+                pr.insert_one({"_id": ctx.author.id, "bio": reason})
+            else:
+                await ctx.send(f'> Ваша биография была изменнено на **{reason}**')
+                pr.delete_one({"_id": ctx.author.id})
+                pr.insert_one({"_id": ctx.author.id, "bio": reason})         
 #
 
     @commands.command(name = 'donate')

@@ -304,7 +304,7 @@ class музыка(commands.Cog):
 
         Пример:
 
-        mplay dont start now или ссылка на музыку с ютуба
+        mplay dont start now или ссылка на музыку с ютуба(Примичание: в боте не ставится музыка в очередь, но с помощью плейлиста с ютуба вы сможите поставить :D)
         """
         if msg.guild.id in self.player:
             if msg.voice_client.is_playing() is True:  # NOTE: SONG CURRENTLY PLAYING
@@ -327,7 +327,7 @@ class музыка(commands.Cog):
                 'repeat': False,
                 'volume': 0.5
             }
-            return await self.start_song(msg, song)
+            return await self.start_song(msg, song)      
 
     @play.before_invoke
     async def before_play(self, msg):
