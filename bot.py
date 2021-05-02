@@ -23,15 +23,16 @@ async def start_session():
     client.session = aiohttp.ClientSession(loop=client.loop)
 
 extensions = [
-'cogs.owner',
-'cogs.member.command',
 'cogs.administator.admin',
-'cogs.administator.plugin',
-'cogs.music.music',
+'cogs.eco.economic',
+'cogs.eco.userDB',
+'cogs.events.errors',
+'cogs.member.command',
 'cogs.member.fun',
 'cogs.member.info',
 'cogs.member.love',
-'cogs.events.errors',
+'cogs.music.music',
+'cogs.owner',
 'jishaku'
 ]
 
@@ -40,7 +41,6 @@ if __name__ == '__main__':
 	for extension in extensions:
 		try:
 			client.load_extension(extension)
-			#client.load_extension('jishaku')
 		except Exception as e:
 			print(f'[!] Не удалось загрузить модуль {extension}.', file=sys.stderr)
 			traceback.print_exc()
@@ -57,7 +57,7 @@ async def on_connect():
 async def on_ready():
 
 	while True:
-		await client.change_presence(activity = discord.Activity(type = discord.ActivityType.watching, name = "https://git.sqdsh.top/"))
+		await client.change_presence(activity = discord.Activity(type = discord.ActivityType.watching, name = "git.sqdsh.top"))
 		await sleep(15)
 		await client.change_presence(activity = discord.Activity(type = discord.ActivityType.listening, name = "Spotify"))
 		await sleep(15)

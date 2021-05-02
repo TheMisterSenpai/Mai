@@ -4,6 +4,8 @@ from discord.utils import get
 from discord.ext import tasks
 
 import config
+from base import random_comment
+import random
 
 class errors(commands.Cog):
     def __init__(self, client):
@@ -14,18 +16,27 @@ class errors(commands.Cog):
         if isinstance(error, commands.BadArgument):
             emb = discord.Embed(title = ':warning: О нет, произошла ошибка в команде!', color=discord.Color.red())
             emb.add_field(name = 'Ошибка:', value = f'> Пользователь не был найден на сервере или в базе данных' )
-            await ctx.send(embed = emb)
+            emb.set_footer(text = random.choice(random_comment.COMMENT))
+            await ctx.send(embed = emb)  
+        if isinstance(error, commands.CommandOnCooldown):
+            emb = discord.Embed(title = ':warning: О нет, у команды кулдаун!', color=discord.Color.red())
+            emb.add_field(name = 'Ошибка:', value = f'> У этой команды есть кулдаун: ``5 часов``' )
+            emb.set_footer(text = random.choice(random_comment.COMMENT))
+            await ctx.send(embed = emb) 
         if isinstance(error, commands.errors.MissingPermissions):
             emb = discord.Embed(title = ':warning: О нет, произошла ошибка в команде!', color=discord.Color.red())
             emb.add_field(name = 'Ошибка:', value = f'> У вас не хватает правил для использование этой команды' )
-            await ctx.send(embed = emb)
+            emb.set_footer(text = random.choice(random_comment.COMMENT))
+            await ctx.send(embed = emb)  
         if isinstance(error, commands.errors.CommandInvokeError):
             emb = discord.Embed(title = ':warning: О нет, произошла ошибка в команде!', color=discord.Color.red())
             emb.add_field(name = 'Ошибка:', value = f'> Возможно у меня не хватает правил или ошибка на стороне кода' )
-            await ctx.send(embed = emb)
+            emb.set_footer(text = random.choice(random_comment.COMMENT))
+            await ctx.send(embed = emb)  
         if isinstance(error, commands.errors.MissingRequiredArgument):
             emb = discord.Embed(title = ':warning: О нет, произошла ошибка в команде!', color=discord.Color.red())
             emb.add_field(name = 'Ошибка:', value = f'> Не правильное использование {ctx.message.content}! Пожалуйста проверьте через `mhelp <команда>`' )   
+            emb.set_footer(text = random.choice(random_comment.COMMENT))
             await ctx.send(embed = emb)                  
 
 

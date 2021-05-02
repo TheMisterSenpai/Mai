@@ -4,6 +4,10 @@ __pycache__/
 *$py.class
 config.py.debug
 
+# My file 
+config.py.debug
+mai-site/
+
 # C extensions
 *.so
 
