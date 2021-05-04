@@ -16,9 +16,14 @@ class экономика(commands.Cog):
         self.client = client
 
     #заработок и перевод
-    @commands.command()
+    @commands.command(name = 'work')
     @commands.cooldown(1, per = 300, type = discord.ext.commands.BucketType.user) # кулдаун на 5 часов
     async def work(self, ctx):
+        '''Заработать валюту 
+        
+        Пример:
+        mwork
+        '''
         coins = random.randint(1, 25) 
         data = bal.find_one({"_id": ctx.author.id})
         
@@ -34,6 +39,11 @@ class экономика(commands.Cog):
 
     @commands.command()
     async def pay(self, ctx, member: discord.Member, amount: int):
+        '''Перевести деньги другому пользователю
+        
+        Пример:
+        mpay @TheMisterSenpai#6701 25
+        '''
         rem = bal.find_one({"_id": ctx.author.id})["balance"]
         add = bal.find_one({"_id": member.id})["balance"]
 
