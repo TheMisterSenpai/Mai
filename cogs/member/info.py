@@ -13,6 +13,7 @@ cluster = MongoClient(config.MONGO)
 collection = cluster.maidb.badge
 lists = cluster.maidb.bl
 pr = cluster.maidb.profile
+bal = cluster.ecomaidb.user
 
 class информация(commands.Cog):
     '''информационнные команды'''
@@ -161,7 +162,6 @@ class информация(commands.Cog):
         user = ctx.message.author if (member == None) else member
 
         if not lists.find_one({"_id": user.id}):
-
             await ctx.send(f'**Профиль** {user}')
             if not collection.find_one({"_id": user.id}):
                 emb = discord.Embed(title = '**Значки**\n-', color = 0xffc0cb)
@@ -170,7 +170,9 @@ class информация(commands.Cog):
                 emb = discord.Embed(title = f'**Значки**\n{badge}', color = 0xffc0cb)
             emb.set_thumbnail(url=user.avatar_url)
             emb.add_field(name = '**Имя**', value = user.name)
-            emb.add_field(name='**Зарегистрирован**', value=user.created_at.strftime("%d.%m.%Y"))   
+            emb.add_field(name='**Зарегистрирован**', value=user.created_at.strftime("%d.%m.%Y"))  
+            balance = bal.find_one({"_id": user.id})["balance"]
+            emb.add_field(name = '**Баланс**', value = f'{balance} :coin:')
             if not pr.find_one({"_id": user.id}):
                 emb.add_field(name = '**О вас**', value = '```Не указанно```')
             else:
@@ -200,10 +202,10 @@ class информация(commands.Cog):
 
         else:
             if not pr.find_one({"_id": ctx.author.id}):
-                await ctx.send(f'> Установлена ваша биография **{reason}**')
+                await ctx.send(f'> Установлена ваша биография ``{reason}``')
                 pr.insert_one({"_id": ctx.author.id, "bio": reason})
             else:
-                await ctx.send(f'> Ваша биография была изменнено на **{reason}**')
+                await ctx.send(f'> Ваша биография была изменнена на ``{reason}``')
                 pr.delete_one({"_id": ctx.author.id})
                 pr.insert_one({"_id": ctx.author.id, "bio": reason})         
 #

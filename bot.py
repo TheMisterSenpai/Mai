@@ -15,7 +15,7 @@ import config
 from asyncio import sleep
 
 
-client = commands.Bot( command_prefix = config.BOT_PREFIX, intents = discord.Intents.all())
+client = commands.Bot( command_prefix = config.BOT_PREFIX)
 client.remove_command('help')
 
 #Загрузка когов

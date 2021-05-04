@@ -410,7 +410,7 @@ class музыка(commands.Cog):
             if msg.guild.id in self.player:
                 if self.player[msg.guild.id]['queue']:
                     emb = discord.Embed(
-                        colour=self.random_color, title='queue')
+                        colour=self.random_color, title='Очередь')
                     emb.set_footer(
                         text=f'Команда была вызвана {msg.author.name}', icon_url=msg.author.avatar_url)
                     for i in self.player[msg.guild.id]['queue']:
