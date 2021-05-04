@@ -25,6 +25,7 @@ async def start_session():
 extensions = [
 'cogs.administator.admin',
 'cogs.eco.economic',
+'cogs.eco.userDB',
 'cogs.events.errors',
 'cogs.member.command',
 'cogs.member.fun',
@@ -32,8 +33,7 @@ extensions = [
 'cogs.member.love',
 'cogs.music.music',
 'cogs.owner',
-'jishaku',
-'cogs.eco.userDB',
+'jishaku'
 ]
 
 if __name__ == '__main__':
