@@ -25,8 +25,8 @@ async def start_session():
 extensions = [
 'cogs.administator.admin',
 #'cogs.eco.economic',
-#'cogs.eco.userDB',
 'cogs.events.errors',
+#'cogs.events.userDB',
 'cogs.member.command',
 'cogs.member.fun',
 'cogs.member.info',
@@ -57,10 +57,10 @@ async def on_connect():
 async def on_ready():
 
 	while True:
-		await client.change_presence(activity = discord.Activity(type = discord.ActivityType.watching, name = "git.sqdsh.top"))
-		await sleep(15)
+		await client.change_presence(activity = discord.Activity(type = discord.ActivityType.watching, name = "sqdsh.top/mai"))
+		await sleep(120)
 		await client.change_presence(activity = discord.Activity(type = discord.ActivityType.listening, name = "Spotify"))
-		await sleep(15)
+		await sleep(120)
 
 
 @client.event

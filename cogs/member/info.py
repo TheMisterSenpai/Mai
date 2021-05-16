@@ -177,7 +177,7 @@ class информация(commands.Cog):
                 emb.add_field(name = '**О вас**', value = '```Не указанно```')
             else:
                 bio = pr.find_one({"_id": user.id})["bio"]
-                emb.add_field(name = '**О вас**', value = f'```{bio}```')    
+                emb.add_field(name = '**О вас**', value = f'{bio}')    
             emb.set_footer(text='Для настройки профиля, пропишите msetbio <Биография>', icon_url=ctx.author.avatar_url)
 
             await ctx.send(embed=emb)
@@ -202,10 +202,14 @@ class информация(commands.Cog):
 
         else:
             if not pr.find_one({"_id": ctx.author.id}):
-                await ctx.send(f'> Установлена ваша биография ``{reason}``')
+                emb = discord.Embed(title = 'Установлена ваша биография')
+                emb.add_field(name='Биография', value=f'> {reason}')
+                await ctx.send(embed=emb)
                 pr.insert_one({"_id": ctx.author.id, "bio": reason})
             else:
-                await ctx.send(f'> Ваша биография была изменнена на ``{reason}``')
+                emb = discord.Embed(title = 'Ваша биография была изменнена')
+                emb.add_field(name='Биография', value=f'> {reason}')
+                await ctx.send(embed=emb)
                 pr.delete_one({"_id": ctx.author.id})
                 pr.insert_one({"_id": ctx.author.id, "bio": reason})         
 #

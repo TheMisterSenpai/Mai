@@ -43,8 +43,7 @@ class Owner(commands.Cog):
         self.bot = bot
 
     @commands.command(hidden = True)
-    @commands.is_owner()
-    async def pings(self, ctx):
+    async def ping(self, ctx):
 
     	resp = await ctx.send('Провожу тестирования...')
     	diff = resp.created_at - ctx.message.created_at
@@ -121,6 +120,8 @@ class Owner(commands.Cog):
     @commands.command(hidden = True, name = 'badge', pass_context=True)
     @commands.is_owner()
     async def badge(self, ctx, add_remove=None, member: discord.Member = None, emoji: discord.Emoji = None):
+        badge = collection.insert_one({"_id": member.id})["badge"]
+        
         if not member:
             member = ctx.author
 
@@ -132,14 +133,19 @@ class Owner(commands.Cog):
             if not collection.find_one({"_id": member.id, "badge": "<:" + emoji.name + ":" + str(emoji.id)+ ">"}):
                 await ctx.send("Что ты будешь уберать, если у него ничего нет?")
             else:
-                await ctx.send(f'У {member.name} был убран значок')
+                await ctx.send(f'{ctx.author.mention} :white_check_mark: ')
                 collection.delete_one({"_id": member.id, "badge": "<:" + emoji.name + ":" + str(emoji.id)+ ">"})
         elif add_remove == 'add':
             if member is None:
                 await ctx.send('Кому собираешься добавить значок?')
             else:
-                await ctx.send(f' {ctx.author} выдал значок {member.name}')
-                collection.insert_one({"_id": member.id, "badge": "<:" + emoji.name + ":" + str(emoji.id)+ ">"})
+                if not badge: 
+                    collection.insert_one({"_id": member.id, "badge": "<:" + emoji.name + ":" + str(emoji.id)+ ">"})
+                    await ctx.send(f' {ctx.author.mention} :white_check_mark: ')
+                else:
+                    collection.update_one({"_id": member.id},
+                        {"$set": {"badge": badge + " " + "<:" + emoji.name + ":" + str(emoji.id)+ ">"}})
+                    await ctx.send(f' {ctx.author.mention} :white_check_mark: ')
         else:
             await ctx.send('Хоть бы, что-то указал')
 

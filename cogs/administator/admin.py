@@ -88,6 +88,7 @@ class администрация(commands.Cog):
 			emb = discord.Embed( color = discord.Color.red())
 			emb.add_field( name = '🔨⟩ Заблокирован', value = f'**{member.name}** был заблокирован с сервера **{ctx.guild.name}**', inline = False)
 			emb.add_field( name = 'Модератор', value = f'{ctx.author}')
+			await member.ban(reason=None)
 
 			await ctx.send(embed=emb, delete_after = 15)
 
@@ -98,6 +99,7 @@ class администрация(commands.Cog):
 			emb.add_field( name = '🔨⟩ Заблокирован', value = f'**{member.name}** был заблокирован с сервера **{ctx.guild.name}**', inline = False)
 			emb.add_field( name = 'По причине:', value = reason, inline = False)
 			emb.add_field( name = 'Модератор:', value = f'``{ctx.author}``')
+			await member.ban(reason=reason)
 
 			await ctx.send(embed = emb, delete_after = 15)
 
@@ -137,6 +139,7 @@ class администрация(commands.Cog):
 			emb = discord.Embed( colour = discord.Color.red(), timestamp = ctx.message.created_at)
 			emb.add_field(name = '🔨⟩Выгнат', value = f'`{member.name}` был выгнат с сервера {ctx.guild.name}', inline = False)
 			emb.add_field(name = 'Модератор:', value = f'**{ctx.author}**')
+			await member.ban(reason=None)
 
 			await ctx.send(embed = emb)
 
@@ -148,6 +151,7 @@ class администрация(commands.Cog):
 			emb.add_field(name = '🔨⟩Выгнат', value = f'`{member.name}` был выгнат с сервер {ctx.guild.name}', inline = False)
 			emb.add_field(name = 'Причина:', value = reason, inline = False)
 			emb.add_field(name = 'Модератор:', value = f'**{ctx.author}**')
+			await member.ban(reason=reason)
 
 			await ctx.send(embed = emb)
 
