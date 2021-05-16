@@ -13,7 +13,6 @@ cluster = MongoClient(config.MONGO)
 collection = cluster.maidb.badge
 lists = cluster.maidb.bl
 pr = cluster.maidb.profile
-bal = cluster.ecomaidb.user
 
 class информация(commands.Cog):
     '''информационнные команды'''
@@ -171,8 +170,6 @@ class информация(commands.Cog):
             emb.set_thumbnail(url=user.avatar_url)
             emb.add_field(name = '**Имя**', value = user.name)
             emb.add_field(name='**Зарегистрирован**', value=user.created_at.strftime("%d.%m.%Y"))  
-            balance = bal.find_one({"_id": user.id})["balance"]
-            #emb.add_field(name = '**Баланс**', value = f'{balance} :coin:')
             if not pr.find_one({"_id": user.id}):
                 emb.add_field(name = '**О вас**', value = '```Не указанно```')
             else:

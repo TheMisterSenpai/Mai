@@ -120,7 +120,7 @@ class Owner(commands.Cog):
     @commands.command(hidden = True, name = 'badge', pass_context=True)
     @commands.is_owner()
     async def badge(self, ctx, add_remove=None, member: discord.Member = None, emoji: discord.Emoji = None):
-        badge = collection.insert_one({"_id": member.id})["badge"]
+        data = collection.insert_one({"_id": member.id})
         
         if not member:
             member = ctx.author
@@ -139,12 +139,12 @@ class Owner(commands.Cog):
             if member is None:
                 await ctx.send('Кому собираешься добавить значок?')
             else:
-                if not badge: 
+                if not data["badge"]: 
                     collection.insert_one({"_id": member.id, "badge": "<:" + emoji.name + ":" + str(emoji.id)+ ">"})
                     await ctx.send(f' {ctx.author.mention} :white_check_mark: ')
                 else:
                     collection.update_one({"_id": member.id},
-                        {"$set": {"badge": badge + " " + "<:" + emoji.name + ":" + str(emoji.id)+ ">"}})
+                        {"$set": {"badge": data["badge"] + " " + "<:" + emoji.name + ":" + str(emoji.id)+ ">"}})
                     await ctx.send(f' {ctx.author.mention} :white_check_mark: ')
         else:
             await ctx.send('Хоть бы, что-то указал')
