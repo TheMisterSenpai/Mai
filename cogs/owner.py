@@ -139,7 +139,7 @@ class Owner(commands.Cog):
             if member is None:
                 await ctx.send('Кому собираешься добавить значок?')
             else:
-                if not data: 
+                if not collection.insert_one({"_id": member.id}):
                     collection.insert_one({"_id": member.id, "badge": "<:" + emoji.name + ":" + str(emoji.id)+ ">"})
                     await ctx.send(f' {ctx.author.mention} :white_check_mark: ')
                 else:
