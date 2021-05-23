@@ -5,6 +5,7 @@ import discord
 from discord.ext import commands
 from discord.utils import get
 from discord.ext import tasks
+from discord_slash import SlashCommand, SlashContext
 
 import os
 import sys
@@ -16,6 +17,7 @@ from asyncio import sleep
 
 
 client = commands.Bot( command_prefix = config.BOT_PREFIX, intents = discord.Intents.all())
+slash = SlashCommand(client, override_type = True)
 client.remove_command('help')
 
 #Загрузка когов
@@ -75,5 +77,10 @@ async def on_message(message):
 		emb.set_thumbnail(url = client.user.avatar_url)
 
 		await message.channel.send(embed = emb)
+
+@slash.slash(name="test")
+async def test(ctx: SlashContext):
+    embed = discord.Embed(title="embed test")
+    await ctx.send(content="test", embeds=[embed])
 
 client.run(config.TOKEN)
