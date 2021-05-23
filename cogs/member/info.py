@@ -24,7 +24,7 @@ class информация(commands.Cog):
     async def info(self, ctx):
 
         emb = discord.Embed(color= config.INFO, title=f'Привет {ctx.author}!', description=f'''
-Меня зовут Мая и создана для маленьких и средних серверов дискорда)\n**Язык программирования**: `Python 3.9`\n**Библиотека**: `discord.py 1.6.0`\n **Создатель**:`TheMisterSenpai#6701`
+Меня зовут Мая и создана для маленьких и средних серверов дискорда)\n**Язык программирования**: `Python 3.9`\n**Библиотека**: `discord.py 1.6.0`\n **Разработчики**:`TheMisterSenpai#6701, swd#2745`
 
 **Полезные ссылки**:\n[Сервер Поддержки](https://discord.gg/seQTFSPAWH) | [Хелп](https://github.com/Kali4I/Rewrite-Discord-bot-Naomi) | [Пригласить меня на свой сервер](https://discord.com/api/oauth2/authorize?client_id=802987390033330227&permissions=8&scope=bot) | [BotiCord](https://sqdsh.top/mai) | [Открытый код](https://github.com/TheMisterSenpai/Mai)
 ''')
