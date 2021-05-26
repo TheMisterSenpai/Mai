@@ -2,11 +2,13 @@
 # coding: utf-8
 
 import discord
+from discord import shard
 from discord.ext import commands
 from discord.utils import get
 from discord.ext import tasks
-from discord_slash import SlashCommand, SlashContext
+from discord import Webhook, RequestsWebhookAdapter
 
+import requests
 import os
 import sys
 import aiohttp
@@ -17,8 +19,8 @@ from asyncio import sleep
 
 
 client = commands.Bot( command_prefix = config.BOT_PREFIX, intents = discord.Intents.all())
-slash = SlashCommand(client, override_type = True)
 client.remove_command('help')
+webhook = Webhook.partial(config.ID_GUILD, config.KEY, adapter=RequestsWebhookAdapter())
 
 #Загрузка когов
 async def start_session():
@@ -26,9 +28,7 @@ async def start_session():
 
 extensions = [
 'cogs.administator.admin',
-#'cogs.eco.economic',
 'cogs.events.errors',
-#'cogs.events.userDB',
 'cogs.member.command',
 'cogs.member.fun',
 'cogs.member.info',
@@ -57,6 +57,16 @@ async def on_connect():
 
 @client.event
 async def on_ready():
+	members = 0
+	for guild in client.guilds:
+		members += guild.member_count
+
+	emb = discord.Embed(title = 'Мая загрузилась', color = config.INFO)
+	emb.add_field(name = 'Количество серверов', value = f'**{len(client.guilds)}**')
+	emb.add_field(name = 'Количество пользователей', value = f'**{members}**')
+	emb.add_field(name = 'Шардов', value = '0')
+
+	webhook.send(embed = emb)
 
 	while True:
 		await client.change_presence(activity = discord.Activity(type = discord.ActivityType.watching, name = "sqdsh.top/mai"))
@@ -64,23 +74,5 @@ async def on_ready():
 		await client.change_presence(activity = discord.Activity(type = discord.ActivityType.listening, name = "Spotify"))
 		await sleep(120)
 
-
-@client.event
-async def on_message(message):
-	await client.process_commands(message)
-
-	msg = message.content.lower()
-	maicontent = ["мая", "mai", "@Мая"]
-
-	if msg in maicontent:
-		emb = discord.Embed(title = "**Я тут**", color = config.INFO, description = "Привет, мой префикс `m` для всех команд! Но если вам не понятно, то можете написать команду `mhelp`")
-		emb.set_thumbnail(url = client.user.avatar_url)
-
-		await message.channel.send(embed = emb)
-
-@slash.slash(name="test")
-async def test(ctx: SlashContext):
-    embed = discord.Embed(title="embed test")
-    await ctx.send(content="test", embeds=[embed])
 
 client.run(config.TOKEN)

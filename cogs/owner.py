@@ -132,8 +132,8 @@ class Owner(commands.Cog):
             if not collection.find_one({"_id": member.id, "badge": "<:" + emoji.name + ":" + str(emoji.id)+ ">"}):
                 await ctx.send("Что ты будешь уберать, если у него ничего нет?")
             else:
-                await ctx.send(f'<@364437278728388611> :white_check_mark: ')
-                collection.delete_one({"_id": member.id, "badge": "<:" + emoji.name + ":" + str(emoji.id)+ ">"})
+                await ctx.send(f'{ctx.author.mention} :white_check_mark: ')
+                collection.delete_one({"_id": member.id})
         elif add_remove == 'add':
             if member is None:
                 await ctx.send('Кому собираешься добавить значок?')
@@ -145,7 +145,7 @@ class Owner(commands.Cog):
                     data = collection.find_one({"_id": member.id})
                     collection.update_one({"_id": member.id},
                         {"$set": {"badge": data["badge"] + " " + "<:" + emoji.name + ":" + str(emoji.id)+ ">"}})
-                    await ctx.send(f'<@364437278728388611> :white_check_mark: ')
+                    await ctx.send(f'{ctx.author.mention} :white_check_mark: ')
         else:
             await ctx.send('Хоть бы, что-то указал')
 
