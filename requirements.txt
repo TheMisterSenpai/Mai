@@ -3,7 +3,7 @@ discord.py==1.6.0
 nekos.py==1.0.3
 nest-asyncio==1.4.0
 wikipedia==1.4.0
-mcstatus==4.0.0
+mcstatus==5.2.0
 beautifulsoup4==4.9.1
 youtube-dl==2021.4.7
 google-api-python-client==1.12.3
