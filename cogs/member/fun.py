@@ -9,7 +9,15 @@ import random
 from random import randint, choice
 import nekos
 import wikipedia
+from pymongo import MongoClient
+cluster = MongoClient(config.MONGO)
+lists = cluster.maidb.bl
 
+def blacklist(ctx):
+    if not lists.find_one({"_id": ctx.author.id}):
+        return message
+    else:
+        pass
 
 class интересные(commands.Cog):
 	'''весёлые команды для серверов'''
@@ -18,6 +26,7 @@ class интересные(commands.Cog):
 		self.client = client
 
 	@commands.command(name = 'hentai', aliases = ['hent'])
+	@commands.check(blacklist)
 	async def hentai(self, ctx):
 		'''Просмотор интересных картинок и gif
 
@@ -44,6 +53,7 @@ class интересные(commands.Cog):
 			await ctx.message.add_reaction('🔞')
 
 	@commands.command(name = 'wiki')
+	@commands.check(blacklist)
 	async def wiki(self, ctx, *, text):
 		'''узнать информацию не открывая браузера
 
@@ -64,6 +74,7 @@ class интересные(commands.Cog):
 		await ctx.send(embed=emb)
 
 	@commands.command(name = 'osu')
+	@commands.check(blacklist)
 	async def osu(self, ctx, player: commands.clean_content, \
                             mode: commands.clean_content = 'osu!'):
 		'''Статистика пользователя в Osu

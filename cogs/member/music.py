@@ -9,6 +9,9 @@ from googleapiclient.discovery import build
 from discord.ext.commands import command
 
 import config
+from pymongo import MongoClient
+cluster = MongoClient(config.MONGO)
+lists = cluster.maidb.bl
 
 YOUTUBE_API = config.YOUTUBE_API
 
@@ -72,6 +75,11 @@ ffmpeg_options = {
     # 'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5'
 }
 
+def blacklist(ctx):
+    if not lists.find_one({"_id": ctx.author.id}):
+        return message
+    else:
+        pass
 
 class Downloader(discord.PCMVolumeTransformer):
     def __init__(self, source, *, data, volume=0.5):
@@ -299,6 +307,7 @@ class музыка(commands.Cog):
         return msg.voice_client
 
     @commands.command()
+    @commands.check(blacklist)
     async def play(self, msg, *, song):
         """Поставить музыку в голосовом чате
 
@@ -356,6 +365,7 @@ class музыка(commands.Cog):
                 return await msg.send("Пожалуйста, войдите в голосовой канал, чтобы поставить музыку в очередь")
 
     @commands.command()
+    @commands.check(blacklist)
     async def repeat(self, msg):
         """Повторить прошлую музыку
 
@@ -377,6 +387,7 @@ class музыка(commands.Cog):
 
 
     @commands.command()
+    @commands.check(blacklist)
     async def skip(self, msg):
         """Пропустить музыку
 
@@ -399,6 +410,7 @@ class музыка(commands.Cog):
 
 
     @commands.command(name='queue')
+    @commands.check(blacklist)
     async def queue(self, msg):
         """Посмотреть музыку в очереди
 
@@ -422,6 +434,7 @@ class музыка(commands.Cog):
 
 
     @commands.command(aliases=['vol'])
+    @commands.check(blacklist)
     async def volume(self, msg, vol: int):
         """Поставить громкость бота
 

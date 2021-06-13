@@ -17,6 +17,11 @@ collection = cluster.maidb.badge
 lists = cluster.maidb.bl
 pr = cluster.maidb.profile
 
+def blacklist(ctx):
+    if not lists.find_one({"_id": ctx.author.id}):
+        return message
+    else:
+        pass
 
 class информация(commands.Cog):
     '''информационнные команды'''
@@ -43,6 +48,7 @@ class информация(commands.Cog):
 
 
     @commands.command(name = 'server')
+    @commands.check(blacklist)
     async def server(self, ctx):
         '''Узнать информацию о сервере
         '''
@@ -60,6 +66,7 @@ class информация(commands.Cog):
 
 
     @commands.command(name = 'userinfo')
+    @commands.check(blacklist)
     async def userinfo(self, ctx, member: discord.Member):
         '''узнать о человеке на сервере
 
@@ -126,6 +133,7 @@ class информация(commands.Cog):
 
 #Для настройки mprofile 
     @commands.command(name = 'setbio', hidden = True)
+    @commands.check(blacklist)
     async def setbio(self, ctx, *, reason=None): # member: discord.Member=None,
         
         if reason == None:
@@ -148,6 +156,7 @@ class информация(commands.Cog):
 #
     
     @commands.command(name = 'avatar')
+    @commands.check(blacklist)
     async def avatar(self, ctx, member: discord.Member=None):
         '''Показать аватар пользователя на сервере
 
@@ -163,6 +172,7 @@ class информация(commands.Cog):
         await ctx.send(embed=embed)
     
     @commands.command(name = 'bug')
+    @commands.check(blacklist)
     async def bug(self, ctx, *, bug=None):
         webhook = Webhook.partial(config.BUG_ID, config.BUGKEY, adapter=RequestsWebhookAdapter())
 

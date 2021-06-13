@@ -8,7 +8,15 @@ from discord.ext import tasks
 from random import randint
 
 import config
+from pymongo import MongoClient
+cluster = MongoClient(config.MONGO)
+lists = cluster.maidb.bl
 
+def blacklist(ctx):
+    if not lists.find_one({"_id": ctx.author.id}):
+        return message
+    else:
+        pass
 
 class comm(commands.Cog):
 	'''здесь только хелп'''
@@ -17,6 +25,7 @@ class comm(commands.Cog):
 		self.client = client
 
 	@commands.command(name='help', aliases=['commands', 'cmds'], hidden = True)
+	@commands.check(blacklist)
 	async def thelp(self, ctx, *, command: str = None):
 
 		if command is None:

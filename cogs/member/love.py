@@ -4,12 +4,22 @@ from discord.utils import get
 
 import nekos
 import random
+from pymongo import MongoClient
+cluster = MongoClient(config.MONGO)
+lists = cluster.maidb.bl
+
+def blacklist(ctx):
+    if not lists.find_one({"_id": ctx.author.id}):
+        return message
+    else:
+        pass
 
 class реакции(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     @commands.command(name = 'hug')
+    @commands.check(blacklist)
     async def hug(self, ctx, member: discord.Member):
         '''обнять любого на сервере
 
@@ -35,6 +45,7 @@ class реакции(commands.Cog):
 
 
     @commands.command(name = 'poke')
+    @commands.check(blacklist)
     async def poke(self, ctx, member: discord.Member):
         '''тыкнуть любого на сервере
 
@@ -60,6 +71,7 @@ class реакции(commands.Cog):
 
 
     @commands.command(name = 'kiss')
+    @commands.check(blacklist)
     async def kiss(self, ctx, member: discord.Member):
         '''поцеловать любого человека
 
