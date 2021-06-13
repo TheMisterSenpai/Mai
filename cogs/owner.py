@@ -175,7 +175,7 @@ class Owner(commands.Cog):
 
     @commands.command(name = 'bl', hidden = True)
     @commands.is_owner()
-    async def bl(self, ctx, *, id = None, reason=None):
+    async def bl(self, ctx, id = None, *, reason=None):
         if not id:
             await ctx.send('Укажи id и причину, чтобы добавить его в ЧС')
 
