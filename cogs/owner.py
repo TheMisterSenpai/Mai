@@ -175,32 +175,35 @@ class Owner(commands.Cog):
 
     @commands.command(name = 'bl', hidden = True)
     @commands.is_owner()
-    async def bl(self, ctx, id = None, *, reason=None):
-        if not id:
-            await ctx.send('Укажи id и причину, чтобы добавить его в ЧС')
+    async def bl(self, ctx, member: discord.Member=None, *, reason=None):
+        if not member:
+            member = ctx.author
+
+            await ctx.send('Укажи человека и причину, чтобы добавить его в ЧС')
 
             return
 
         if reason == None:
             await ctx.send('✅')
-            lists.insert_one({"_id": id, "prichina": "Без указание причины"})
+            lists.insert_one({"_id": member.id, "prichina": "Без указание причины"})
 
         else:
             await ctx.send(f'✅')
-            lists.insert_one({"_id": id, "prichina": reason})
+            lists.insert_one({"_id": member.id, "prichina": reason})
 
     @commands.command(name = 'sy', hidden = True)
     @commands.is_owner()
-    async def sy(self, ctx, id):
+    async def sy(self, ctx, member: discord.Member=None):
 
-        if not id:
-            await ctx.send('Укажи id, чтобы убрать его в ЧС')
+        if not member:
+            member = ctx.author
+            await ctx.send('Укажи человека, чтобы убрать его в ЧС')
 
             return
 
         else:
             await ctx.send('✅')
-            lists.delete_one({"_id": id})
+            lists.delete_one({"_id": member.id})
 
     @commands.command(name = 'test', hidden = True)
     @commands.check(blacklist)
