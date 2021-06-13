@@ -5,6 +5,7 @@ from discord.ext import commands
 from discord.utils import get
 from discord.ext import tasks
 
+import config
 import random
 from random import randint, choice
 import nekos

@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from discord.utils import get
 
+import config
 import nekos
 import random
 from pymongo import MongoClient
