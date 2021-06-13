@@ -7,6 +7,7 @@ import os
 from discord.ext import commands
 from googleapiclient.discovery import build
 from discord.ext.commands import command
+from discord import message
 
 import config
 from pymongo import MongoClient

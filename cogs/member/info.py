@@ -1,5 +1,6 @@
 import discord
 from discord import embeds
+from discord import message
 from discord.ext import commands
 from discord.ext.commands.core import command
 from discord.utils import get
