@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from discord.utils import get
 from discord.ext import tasks
+from discord import message
 
 import config
 import traceback
@@ -10,6 +11,12 @@ from pymongo import MongoClient
 cluster = MongoClient(config.MONGO)
 lists = cluster.maidb.bl
 
+def blacklist(ctx):
+    if not lists.find_one({"_id": ctx.author.id}):
+        return message
+    else:
+        pass
+
 class администрация(commands.Cog):
 	'''Команды для администрации серверов'''
 
@@ -17,6 +24,7 @@ class администрация(commands.Cog):
 		self.client = client
 
 	@commands.command(name = 'clear')
+	@commands.check(blacklist)
 	@commands.has_permissions( manage_messages=True )
 	async def clear(self, ctx, amount : int):
 		'''почистить чат от ненужных сообщений
@@ -32,6 +40,7 @@ class администрация(commands.Cog):
 			await ctx.send(f'📥⟩ Было очищено сообщений: **{len(deleted)}**', delete_after = 30)
 
 	@commands.command(name = 'clearur')
+	@commands.check(blacklist)
 	@commands.has_permissions(manage_messages=True )
 	async def clearur(self, ctx, member: discord.Member, amount : int):
 		'''очистить сообщение от пользователя 
@@ -48,6 +57,7 @@ class администрация(commands.Cog):
 
 
 	@commands.command(name = 'ban')
+	@commands.check(blacklist)
 	@commands.has_permissions( kick_members = True)
 	async def ban(self, ctx, member : discord.Member, *, reason=None):
 		'''заблокировать нарушителя на сервере
@@ -104,6 +114,7 @@ class администрация(commands.Cog):
 			await ctx.send(embed = emb, delete_after = 15)
 
 	@commands.command(name = 'kick')
+	@commands.check(blacklist)
 	@commands.has_permissions( kick_members = True )
 	async def kick(self, ctx, member : discord.Member, *, reason=None):
 
@@ -157,6 +168,7 @@ class администрация(commands.Cog):
 
 
 	@commands.command(name = 'banlist')
+	@commands.check(blacklist)
 	async def banlist (self, ctx):
 		'''просмотор заблокированых людей
 
@@ -181,6 +193,7 @@ class администрация(commands.Cog):
 		await ctx.send(embed = emb)
 
 	@commands.command(name = 'unban')
+	@commands.check(blacklist)
 	@commands.has_permissions( administrator = True)
 	async def unban ( self, ctx, *, member):
 		'''разблокировать человека на сервере

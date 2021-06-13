@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands
 from discord.utils import get
 from discord.ext import tasks
+from discord import message
 
 from random import randint
 
