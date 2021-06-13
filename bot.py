@@ -2,11 +2,13 @@
 # coding: utf-8
 
 import discord
-from discord import shard
+from discord import message
 from discord.ext import commands
 from discord.utils import get
 from discord.ext import tasks
+from discord import client
 from discord import Webhook, RequestsWebhookAdapter
+
 
 import requests
 import os
@@ -18,9 +20,10 @@ import config
 from asyncio import sleep
 
 
-client = commands.Bot( command_prefix = config.BOT_PREFIX, intents = discord.Intents.all())
+client = commands.Bot( command_prefix = config.BOT_PREFIX)
 client.remove_command('help')
 webhook = Webhook.partial(config.ID_GUILD, config.KEY, adapter=RequestsWebhookAdapter())
+
 
 #Загрузка когов
 async def start_session():
@@ -33,7 +36,7 @@ extensions = [
 'cogs.member.fun',
 'cogs.member.info',
 'cogs.member.love',
-'cogs.music.music',
+'cogs.member.music',
 'cogs.owner',
 'jishaku'
 ]
@@ -57,17 +60,13 @@ async def on_connect():
 
 @client.event
 async def on_ready():
-	members = 0
-	for guild in client.guilds:
-		members += guild.member_count
 
 	emb = discord.Embed(title = 'Мая загрузилась', color = config.INFO)
 	emb.add_field(name = 'Количество серверов', value = f'**{len(client.guilds)}**')
-	emb.add_field(name = 'Количество пользователей', value = f'**{members}**')
 	emb.add_field(name = 'Шардов', value = '0')
 
 	webhook.send(embed = emb)
-
+	
 	while True:
 		await client.change_presence(activity = discord.Activity(type = discord.ActivityType.watching, name = "sqdsh.top/mai"))
 		await sleep(120)

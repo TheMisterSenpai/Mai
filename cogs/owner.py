@@ -1,5 +1,7 @@
 import discord
+from discord import message
 from discord.ext import commands
+from discord.ext.commands.core import command
 from discord.utils import get
 from discord.ext import tasks
 
@@ -35,6 +37,11 @@ def insert_returns(body):
     if isinstance(body[-1], ast.With):
         insert_returns(body[-1].body)
 
+def blacklist(ctx):
+    if not lists.find_one({"_id": ctx.member.id}):
+        return message
+    else:
+        pass
 
 class Owner(commands.Cog):
     '''Команды для тестирования и откладки бота, но может он ненужен, т.к есть jishaku)'''
@@ -43,6 +50,7 @@ class Owner(commands.Cog):
         self.bot = bot
 
     @commands.command(hidden = True)
+    @commands.is_owner()
     async def ping(self, ctx):
 
     	resp = await ctx.send('Провожу тестирования...')
@@ -82,6 +90,22 @@ class Owner(commands.Cog):
         await ctx.send(f'**`Ошибка при перезагрузке модуля {cog}:`** \n{type(e).__name__} - {e}')
       else:
         await ctx.send(f'**`Модуль {cog} успешно перезагружен`**')
+
+    @commands.command(hidden = True)
+    @commands.is_owner()
+    async def debug(self, ctx, on_off=None):
+        if not on_off:
+            await ctx.send('**Чумба**, выбери включить или выключить дебаг')
+
+            return
+        if on_off == 'on':
+            self.bot.unload_extension('cogs.events.errors')
+            await ctx.send(f'{ctx.author.mention} :white_check_mark:')
+        elif on_off == 'off':
+            self.bot.load_extension('cogs.events.errors')
+            await ctx.send(f'{ctx.author.mention} :white_check_mark:')
+        else:
+            await ctx.send('>W<')
 
     @commands.command(hidden = True)
     @commands.is_owner()
@@ -151,35 +175,37 @@ class Owner(commands.Cog):
 
     @commands.command(name = 'bl', hidden = True)
     @commands.is_owner()
-    async def bl(self, ctx, member: discord.Member=None, *, reason=None):
-        if not member:
-            member = ctx.author
-            await ctx.send('Укажи человека и причину, чтобы добавить его в ЧС')
+    async def bl(self, ctx, id = None, *, reason=None):
+        if not id:
+            await ctx.send('Укажи id и причину, чтобы добавить его в ЧС')
 
             return
 
         if reason == None:
             await ctx.send('✅')
-            lists.insert_one({"_id": member.id, "prichina": "Без указание причины"})
+            lists.insert_one({"_id": id, "prichina": "Без указание причины"})
 
         else:
-            await ctx.send(f'✅ по причине: {reason}')
-            lists.insert_one({"_id": member.id, "prichina": reason})
+            await ctx.send(f'✅')
+            lists.insert_one({"_id": id, "prichina": reason})
 
     @commands.command(name = 'sy', hidden = True)
     @commands.is_owner()
-    async def sy(self, ctx, member: discord.Member=None):
+    async def sy(self, ctx, id):
 
-        if not member:
-            member = ctx.author
-            await ctx.send('Укажи человека и причину, чтобы убрать его в ЧС')
+        if not id:
+            await ctx.send('Укажи id, чтобы убрать его в ЧС')
 
             return
 
         else:
             await ctx.send('✅')
-            lists.delete_one({"_id": member.id})
+            lists.delete_one({"_id": id})
 
+    @commands.command(name = 'test', hidden = True)
+    @commands.check(blacklist)
+    async def test(self, ctx):
+        await ctx.send('senpai zhopa')
 
 def setup(client):
     client.add_cog(Owner(client))

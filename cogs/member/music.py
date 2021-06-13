@@ -198,7 +198,7 @@ class музыка(commands.Cog):
             return await msg.send(f"✅⟩Был добавлен плейлист {data['title']} в очередь")
         self.player[msg.guild.id]['queue'].append(
             {'title': title, 'author': msg})
-        return await msg.send(f"✅⟩**{title} была добавлена в очередь**".title())
+        return await msg.send(f"**{title} была добавлена в очередь**".title())
 
     async def voice_check(self, msg):
         """

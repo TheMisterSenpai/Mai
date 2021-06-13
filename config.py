@@ -19,3 +19,7 @@ INFO = 0xffc0cb
 #status
 ID_GUILD = os.environ['GUILD']
 KEY = os.environ['KEY']
+
+#bug
+BUG_ID = '853679236261740556'
+BUGKEY = 'IYOt-UkcW9SE2zCdYngCHvSsrEkbwXVpRTzQESqXCaFJV9QKW4SLb5tOG2fq2SfUET1K' 
