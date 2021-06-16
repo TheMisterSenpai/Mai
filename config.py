@@ -1,21 +1,12 @@
-from dotenv import load_dotenv
-
-from pathlib import Path
 import os 
-
-#загрузка .env
-load_dotenv()
-env_path = Path('.')/'.env'
-load_dotenv(dotenv_path = env_path)
-
 
 #bot_setting
 BOT_PREFIX = 'm'
 
 #API
-TOKEN = os.getenv['TOKEN']
-MONGO = os.getenv['MONGO']
-YOUTUBE_API = os.getenv['YTAPI']
+TOKEN = os.environ['TOKEN']
+MONGO = os.environ['MONGO']
+YOUTUBE_API = os.environ['YTAPI']
 
 #ID
 BOT_ID = '802987390033330227'
@@ -26,9 +17,9 @@ BANLISTYES = 0xff0000
 INFO = 0xffc0cb
 
 #status
-ID_GUILD = os.getenv['GUILD']
-KEY = os.getenv['KEY']
+ID_GUILD = os.environ['GUILD']
+KEY = os.environ['KEY']
 
 #bug
-BUG_ID = os.getenv['GUILDBUG']
-BUGKEY = os.getenv['KEYBUG']
+BUG_ID = os.environ['GUILDBUG']
+BUGKEY = os.environ['KEYBUG']
