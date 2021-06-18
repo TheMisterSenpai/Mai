@@ -136,10 +136,10 @@ class Owner(commands.Cog):
             exec(compile(parsed, filename="<ast>", mode="exec"), env)
 
             result = (await eval(f"{fn_name}()", env))
-            await ctx.send(result)
+            await ctx.reply(result, mention_author=False)
 
         except Exception as error:
-            return await ctx.send(embed=discord.Embed(description=f'В вашем коде произошла следующая ошибка:\n`{error}`', color = 0xff0000))
+            return await ctx.reply(embed=discord.Embed(description=f'В вашем коде произошла следующая ошибка:\n`{error}`', color = 0xff0000))
 
     @commands.command(hidden = True, name = 'badge', pass_context=True)
     @commands.is_owner()
