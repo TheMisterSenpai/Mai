@@ -42,7 +42,7 @@ class информация(commands.Cog):
         emb.add_field(name = 'Статистика', value = f'**Всего серверов | {len(self.client.guilds)}**\n**Всего команд | 23**\n**Задержка API | {1000 * diff.total_seconds():.1f}мс**')
         emb.add_field(name = 'Мои разработчики', value = '[TheMisterSenpai#6701](https://sqdsh.top/hack)\n[swd#6250](https://github.com/swdblurple)')
         emb.add_field(name = 'Описание', value = 'Мая простой бот для маленьких и средних серверов дискорда. В боте есть команды для администрации, музыка, интересные команды(для некоторых нужно каналы с nsfw) и также информационные.')
-        emb.add_field(name = 'Полезные ссылки', value = '[Мониторинг](https://dsrv.top/mai) • [Сервер поддержки](https://discord.gg/etc66NNCVP) • [Комментарии](https://sqdsh.top/comment) • [Донатик](https://www.donationalerts.com/r/themistersenpai) • [Пригласить меня](https://discord.com/oauth2/authorize?client_id=802987390033330227&permissions=8&scope=bot%20applications.commands) ')
+        emb.add_field(name = 'Полезные ссылки', value = '[Мониторинг](https://dsrv.top/b/mai) • [Сервер поддержки](https://discord.gg/etc66NNCVP) • [Комментарии](https://sqdsh.top/comment) • [Донатик](https://www.donationalerts.com/r/themistersenpai) • [Пригласить меня](https://discord.com/oauth2/authorize?client_id=802987390033330227&permissions=8&scope=bot%20applications.commands) ')
         
         await resp.edit(embed = emb)
         
