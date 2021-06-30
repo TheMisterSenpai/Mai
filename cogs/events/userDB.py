@@ -20,7 +20,6 @@ class userDB(commands.Cog):
             for member in guild.members:
                 post = {
                     "_id": member.id,
-                    "guild": guild.id,
                     "balance": 0,
                     "xp": 0,
                     "lvl": 0
@@ -33,7 +32,6 @@ class userDB(commands.Cog):
     async def on_member_join(self, member):
         post = {
             "_id": member.id,
-            "guild": ctx.guild.id,
             "balance": 0,
             "xp": 0,
             "lvl": 0
@@ -42,15 +40,6 @@ class userDB(commands.Cog):
         if user.count_documents({"_id": member.id}) == 0:
             user.insert_one(post)
 
-    @commands.Cog.listener()
-    async def on_member_leave(self, member):
-
-        post = {
-            "_id": member.id,
-            "guild": ctx.guild.id
-        }
-
-        user.delete_one(post)
     
 def setup(client):
     client.add_cog(userDB(client))
