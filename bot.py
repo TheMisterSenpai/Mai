@@ -48,7 +48,6 @@ if __name__ == '__main__':
 			client.load_extension(extension)
 		except Exception as e:
 			print(f'[!] Не удалось загрузить модуль {extension}.', file=sys.stderr)
-			traceback.print_exc()
 			print('------------------------')
 		else:
 			print(f'[!] Модуль {extension} успешно загружен.')
